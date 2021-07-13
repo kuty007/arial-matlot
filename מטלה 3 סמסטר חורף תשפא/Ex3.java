@@ -93,41 +93,40 @@ public class Ex3 {
 
     }
 
+
     public static boolean mySplit(int[] nums) {
         int n = nums.length;
-        int[] arr = new int[nums.length];
-        int j = 0;
-        int leftsum = 0, rightsum = 0;
-        for (int num : nums) {
-            // if the number is divisible by 5  add him to the right sum
-            if (num % 5 == 0)
-                leftsum += num;
-                // if the number is divisible by 3 add him to the right sum
-            else if (num % 3 == 0)
-                rightsum += num;
-            else
-                // array of the numbers that not divided by 3 and 5
-                arr[j++] = num;
+        {
+            // Initially start, lsum and rsum will all be 0
+            return helper(nums, n, 0, 0, 0);
         }
-        return mySplitHelper(arr, n, leftsum, rightsum);
-
     }
 
+    public static boolean helper(int arr[], int n, int start, int lsum, int rsum) {
 
-    private static boolean mySplitHelper(int[] arr, int n, int leftsum, int rightsum) {
+        // If reached the end
+        if (start == n)
+            return lsum == rsum;
 
-        // if reached the end of the recursion process and the sums are equal
-        if (0 == n && leftsum == rightsum)
-            return true;
-// if reached the end of the recursion process and the sums are not equal
-        if (n == 0)
-            return false;
+        // If divisible by 5 then add to the left sum
+        if (arr[start] % 5 == 0)
+            lsum += arr[start];
 
+            // If divisible by 3 but not by 5
+            // then add to the right sum
+        else if (arr[start] % 3 == 0)
+            rsum += arr[start];
+
+            // Else it can be added to any of the sub-arrays
         else
 
-            // Try adding in both the sides (left, right) and check whether the condition satisfies
-            return mySplitHelper(arr, n - 1, leftsum + arr[n - 1], rightsum) || mySplitHelper(arr, n - 1, leftsum, rightsum + arr[n - 1]);
+            // Try adding in both the sub-arrays (one by one)
+            // and check whether the condition satisfies
+            return helper(arr, n, start + 1, lsum + arr[start], rsum)
+                    || helper(arr, n, start + 1, lsum, rsum + arr[start]);
 
+        // For cases when element is multiple of 3 or 5.
+        return helper(arr, n, start + 1, lsum, rsum);
     }
 
     //The function receives a matrix and replaces each value in the matrix with the value of the sum of its neighbors
@@ -167,5 +166,47 @@ public class Ex3 {
         return sum;
     }
 
+    public static int[][] sumOfNeighbours(int[][] mat) {//another option for this question
+        int[][] sum = new int[mat.length][mat[0].length];
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < mat[i].length; j++) {
+                sum[i][j] = Neighbors(mat, i, j);
+            }
+        }
+        return sum;
+    }
+
+    private static boolean isInside(int[][] cells, int x, int y) {
+        if (x < 0 || cells.length <= x) {
+            return false;
+        }
+        if (y < 0 || cells[0].length <= y) {
+            return false;
+        }
+        return true;
+    }
+
+    private static int Neighbors(int[][] cells, int x, int y) {
+        int sum = 0;
+
+        if (isInside(cells, x - 1, y - 1))
+            sum += cells[x - 1][y - 1];
+        if (isInside(cells, x, y - 1))
+            sum += cells[x][y - 1];
+        if (isInside(cells, x + 1, y - 1))
+            sum += cells[x + 1][y - 1];
+        if (isInside(cells, x - 1, y))
+            sum += cells[x - 1][y];
+        if (isInside(cells, x + 1, y))
+            sum += cells[x + 1][y];
+        if (isInside(cells, x - 1, y + 1))
+            sum += cells[x - 1][y + 1];
+        if (isInside(cells, x, y + 1))
+            sum += cells[x][y + 1];
+        if (isInside(cells, x + 1, y + 1))
+            sum += cells[x + 1][y + 1];
+        return sum;
+    }
 }
+
 
