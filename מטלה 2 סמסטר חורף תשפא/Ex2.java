@@ -115,27 +115,4 @@ public class Ex2 {
         return mid;
 
     }
-
-
-
-
-    public static int sort (int arr[], int n) {
-
-        int max = 1, len = 1;
-        for (int i = 1; i < n; i++) {
-            if (arr[i] < 0)
-                len++;
-            else {
-                if (max < len)
-                    max = len;
-                len = 0;
-            }
-        }
-        if (max < len)
-            max = len;
-
-        return max;
-
-
-    }
 }

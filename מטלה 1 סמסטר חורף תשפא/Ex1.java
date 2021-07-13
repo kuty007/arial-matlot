@@ -38,7 +38,7 @@ public class Ex1 {
         int maxprimedivder = 1;                 // set a variable maxprimedivder to be equal to 1
         if (x > 0) {
             for (int i = x; 2 <= i; i--) {      // check all the numbers (i) form x to the number 2 in descending order
-                if (num1 % i == 0 && num2 % i == 0 && isprime(i) == true) {// check if the number is the divider of num1 and num 2 and if this is a prime number
+                if (num1 % i == 0 && num2 % i == 0 && isprime(i)) {// check if the number is the divider of num1 and num 2 and if this is a prime number
                     maxprimedivder = i;         //if we found number i that is true for all the conditions in the previous stage update the value of maxprimedivder to be equal to him
                     return ("Computes the GPCD(" + num1 + "," + num2 + ") =\n" + "Max Prime Common Divider: " + maxprimedivder);    // once we found maxprimedivder we return him
                 }
