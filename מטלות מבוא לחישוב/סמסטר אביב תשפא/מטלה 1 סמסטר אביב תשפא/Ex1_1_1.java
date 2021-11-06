@@ -1,5 +1,5 @@
 
-//ID:206316895
+
 import java.util.Scanner;
 
 public class Ex1_1_1 {
